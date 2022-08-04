@@ -6,12 +6,18 @@ import {addDoc,collection, doc, getDocs,query,onSnapshot,orderBy, setDoc} from '
 import { storageService } from '../firebase';
 import { getDownloadURL,uploadString,uploadBytes} from 'firebase/storage';
 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 export default function Upload () {
   const [title,setTitle]=useState("")
   const [content,setContent]=useState("")
   const [price,setPrice]=useState("")
   const [image,setImage]=useState("")
   const [file,setFile]=useState("")
+  const [show,setShow]=useState(false)
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleImage= (event)=>{
     const {target:{files}}=event;
@@ -41,9 +47,7 @@ export default function Upload () {
     if (image!==""){
       const imageRef = ref(storageService, `image/${file.name}`);
       const response = await uploadString(imageRef, image, "data_url");
-      console.log(response)
       imageUrl = await getDownloadURL(response.ref);
-      console.log(imageUrl)
     } else{
       imageUrl=""
     }
@@ -54,8 +58,10 @@ export default function Upload () {
       가격:price,
       URL:imageUrl
     })
-
     console.log("업로드완료")
+    ///업로드 완료 시 모달창을 띄워준다.
+    handleShow()
+    
   }
 
 
@@ -74,15 +80,39 @@ export default function Upload () {
 
 
   return (
-    <div>
-      <div className="container mt-3">
-        <input onChange={handleChange} type="text" className="form-control mt-2" id="title" placeholder="title" value={title}/>
-        <input onChange={handleChange} className="form-control mt-2" id="content" value={content} placeholder="content"/>
-        <input onChange={handleChange} type="text" className="form-control mt-2" id="price" placeholder="price" value={price}/>
-        <input onChange={handleImage} className="form-control mt-2" type="file" id="image"/>
-        <button onClick={ ()=>{handleClick()} } className="btn btn-danger mt-3" id="send">올리기</button>
-        <button onClick={ ()=>{upload()} } className="btn btn-primary mt-3 mx-3" id='upload'>그림 올리기</button>
-      </div>      
-    </div>
+    <>
+      <div>
+        <div className="container mt-3">
+          <input onChange={handleChange} type="text" className="form-control mt-2" id="title" placeholder="title" value={title}/>
+          <input onChange={handleChange} className="form-control mt-2" id="content" value={content} placeholder="content"/>
+          <input onChange={handleChange} type="text" className="form-control mt-2" id="price" placeholder="price" value={price}/>
+          <input onChange={handleImage} className="form-control mt-2" type="file" id="image"/>
+          <button onClick={ ()=>{handleClick()} } className="btn btn-danger mt-3" id="send">올리기</button>
+        </div>      
+      </div>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Launch static backdrop modal
+      </Button> */}
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>알림창</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          상품이 등록 완료 되었습니다.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            닫기
+          </Button>
+        </Modal.Footer>
+      </Modal>      
+    </>
+
   );
 }

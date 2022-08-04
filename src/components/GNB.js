@@ -13,7 +13,7 @@ export default function GNB () {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Link href='/'><a className='mx-3' style={{textDecoration:"none"}}>리스트</a></Link>
-              <Link href="/upload"><a className='mx-3' style={{textDecoration:"none"}}>등록</a></Link>
+              <Link href="/upload"><a className='mx-3' style={{textDecoration:"none"}}>상품등록</a></Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

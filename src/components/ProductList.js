@@ -7,16 +7,21 @@ import Image from 'next/image'
 
 export default function ProductList () {
   const [products,setProducts]=useState([])
+  const [isComplete,setIsComplete]=useState(true)
 
-  const getProducts=async ()=>{
-    
+  const getProducts=async ()=>{  
     const q=query(collection(dbService,"product"))
-    const querySnapshot=await getDocs(q);
-    if (products.length===0){
+    const querySnapshot=await getDocs(q)
       querySnapshot.forEach((doc)=>{
-        setProducts((prev)=>[doc.data(),...prev])
+        const newOne=doc.data()
+        setProducts((prev)=>{
+          if (prev.length<querySnapshot.size){
+            return [newOne,...prev]
+          } else {
+            return prev
+          }
+        })
       })
-    }
   }
 
   useEffect(() => {
@@ -39,7 +44,8 @@ export default function ProductList () {
               <p className="date">{elem.게시일}</p>
               <p className="price">{elem.가격}원</p>
               <p className="float-end">♡0</p>
-              <button className='btn btn-danger my-3'>삭제</button>
+              <button className='btn btn-primary my-3 mx-3'>자세히 보기</button>
+              <button className='btn btn-danger my-3 mx-3'>삭제</button>
             </div>
           </div>
         </div>  
