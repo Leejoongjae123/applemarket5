@@ -3,17 +3,14 @@ import {useEffect, useState} from 'react'
 import {authService} from '../firebase';
 import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,GithubAuthProvider,updateProfile,signOut} from 'firebase/auth'
 import { AuthError } from 'firebase/auth';
-import { useDispatch,useSelector } from 'react-redux';
-import { changeLoggedIn } from '../store/store';
 import ProductList from './ProductList';
 import GNB from './GNB';
 
 export default function Login () {
-  const {loggedIn}=useSelector((state)=>{return state})
-  let dispatch=useDispatch()
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
   const [name,setName]=useState("")
+  const [loggedIn,setLoggedIn]=useState(false)
   const onChange=(event)=>{
     const {target:{id,value}}=event;
     if(id==="email-new"){
@@ -28,13 +25,15 @@ export default function Login () {
     }
   }
   
+
+
   const onSubmit= async (event)=>{
     if (event.target.id==="register"){
       let result=await createUserWithEmailAndPassword(authService,email,password)    
       console.log(result.user)
     } else if (event.target.id==="login") {
       let result=await signInWithEmailAndPassword(authService,email,password)
-      dispatch(changeLoggedIn())
+      setLoggedIn(true)
     } else {
       let result=await signOut(authService)
       
