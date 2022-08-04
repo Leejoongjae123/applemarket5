@@ -7,7 +7,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { changeLoggedIn } from '../store/store';
 import ProductList from './ProductList';
 import GNB from './GNB';
-export default function login () {
+
+export default function Login () {
   const {loggedIn}=useSelector((state)=>{return state})
   let dispatch=useDispatch()
   const [email,setEmail]=useState("")
