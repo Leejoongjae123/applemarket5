@@ -5,6 +5,8 @@ import {dbService} from '../firebase'
 import {addDoc,collection, doc, getDocs,query,onSnapshot,orderBy, setDoc} from 'firebase/firestore'
 import { storageService } from '../firebase';
 import { getDownloadURL,uploadString,uploadBytes} from 'firebase/storage';
+import {authService} from '../firebase';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -18,6 +20,8 @@ export default function Upload () {
   const [show,setShow]=useState(false)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  
 
   const handleImage= (event)=>{
     const {target:{files}}=event;
@@ -51,18 +55,30 @@ export default function Upload () {
     } else{
       imageUrl=""
     }
+    const uid=""
+    const userInfo = await onAuthStateChanged(authService,(user)=>{
+      if(user){
+        uid=user.email
+        console.log(uid)
+      } else{
+        console.log("유저아이디없음")
+      }
+    })
 
     const docRef=await addDoc(collection(dbService,'product'),{
       제목:title,
       게시일:dateString,
       가격:price,
-      URL:imageUrl
+      URL:imageUrl,
+      uid:uid,
     })
     console.log("업로드완료")
     ///업로드 완료 시 모달창을 띄워준다.
     handleShow()
     
   }
+
+
 
 
   const handleChange= (event)=>{
