@@ -5,7 +5,6 @@ import GNB from '../src/components/GNB';
 export default function upload () {
   return (
     <div>
-      <GNB></GNB>
       <Upload></Upload>
     </div>
   );

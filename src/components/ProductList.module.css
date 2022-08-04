@@ -17,6 +17,11 @@
 .product{
   display: flex;
   align-items: center;
+  list-style: none;
+}
+.link{
+  text-decoration: none;
+  color:black
 }
 
 .thumbnail{

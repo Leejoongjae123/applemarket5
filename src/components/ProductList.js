@@ -4,6 +4,7 @@ import {addDoc,collection, doc, getDocs,query,onSnapshot,orderBy} from 'firebase
 import {dbService} from '../firebase'
 import styles from './ProductList.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function ProductList () {
   const [products,setProducts]=useState([])
@@ -44,8 +45,7 @@ export default function ProductList () {
               <p className="date">{elem.게시일}</p>
               <p className="price">{elem.가격}원</p>
               <p className="float-end">♡0</p>
-              <button className='btn btn-primary my-3 mx-3'>자세히 보기</button>
-              <button className='btn btn-danger my-3 mx-3'>삭제</button>
+              <Link href={`/product/${elem.제목}`}><button className='btn btn-primary my-3 mx-3'>자세히 보기</button></Link>
             </div>
           </div>
         </div>  

@@ -7,6 +7,7 @@ function MyApp({ Component, pageProps }) {
   
   return (
   <>
+  <GNB></GNB>
   <Component {...pageProps} />
   </>
   )

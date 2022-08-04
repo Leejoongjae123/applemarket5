@@ -45,7 +45,6 @@ export default function login () {
       loggedIn===true
       ?(
         <>
-        <GNB></GNB>
         <ProductList></ProductList>
         </>
       )
