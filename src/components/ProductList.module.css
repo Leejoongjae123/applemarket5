@@ -1,0 +1,38 @@
+.container{
+  width:100%;
+  height:50px;
+  background-color: #eee;
+  display:flex;
+  
+}
+
+.thumbnail__img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  padding:10px;
+  border-radius: 20px;
+}
+
+.product{
+  display: flex;
+  align-items: center;
+}
+
+.thumbnail{
+  width:100%;
+  height:100%;
+  flex:3;
+}
+
+.contents{
+  flex:7;
+  width:100%;
+  height:100%;
+  margin-left: 20px;  
+  padding:10px;
+}
+.contents > h5,
+.contents > p{
+  flex-direction: column;
+}
