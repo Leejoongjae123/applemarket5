@@ -1,10 +1,11 @@
 import React from 'react';
 import {useEffect, useState} from 'react'
 import {authService} from '../firebase';
-import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,GithubAuthProvider,updateProfile,signOut} from 'firebase/auth'
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,GithubAuthProvider,updateProfile,signOut,onAuthStateChanged} from 'firebase/auth'
 import { AuthError } from 'firebase/auth';
 import ProductList from './ProductList';
 import GNB from './GNB';
+
 
 export default function Login () {
   const [email,setEmail]=useState("")
@@ -25,7 +26,7 @@ export default function Login () {
     }
   }
   
-
+  
 
   const onSubmit= async (event)=>{
     if (event.target.id==="register"){
@@ -39,6 +40,21 @@ export default function Login () {
       
     }
   }
+
+  useEffect( () => {
+    onAuthStateChanged(authService,(user)=>{
+      if(user){
+        let uid=user.email
+        console.log("로그인되어있음",uid)
+        setLoggedIn(true)
+      } else{
+        console.log("유저아이디없음")
+      }
+    })
+  }, []);
+
+  
+
   return (
     <>
     {
@@ -50,7 +66,7 @@ export default function Login () {
       )
       :(
         <div className="vw-100 vh-100 d-flex flex-column justify-content-center">
-        <div className='my-2 w-60 mx-auto text-center fs-1'>애플 마켓에 오신것을 환영합니다!</div>
+        <div className='my-2 w-60 mx-auto text-center fs-1'>WELCOME TO APPLEMARKET</div>
         {/* <div className="mb-3">
           <input type="text" className="form-control" placeholder="name" id="name-new" onChange={onChange} value={name}/>
         </div> */}
@@ -63,7 +79,9 @@ export default function Login () {
         <div className="d-flex w-50 mx-auto justify-content-between">
           <button type="submit" className="d-block btn btn-primary btn-lg" id="register" onClick={ ()=>{onSubmit(event)}}>가입</button>
           <button type="submit" className="d-block btn btn-danger btn-lg" id="login" onClick={ ()=>{onSubmit(event)}}>로그인</button>
+          <button onClick={ ()=>{handleLogin()}  }>로그인했냐</button>
         </div>
+        
         {/* <button type="submit" className="btn btn-danger mx-3" id="logout" onClick={ ()=>{onSubmit(event)}}>로그아웃</button> */}
         </div>
       )

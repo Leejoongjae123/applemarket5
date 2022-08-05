@@ -69,6 +69,7 @@ export default function Upload () {
       제목:title,
       게시일:dateString,
       가격:price,
+      content:content,
       URL:imageUrl,
       uid:uid,
     })

@@ -33,11 +33,12 @@ const Post = () => {
         <div className="detail-pic my-4"></div>
         <div className='container w-100 h-70'><img className='w-100 h-100' src={data.URL} alt="" /></div>
         <div>
-          <h5>올린사람 : 이중재</h5>
+          <h5>올린이 : {data.uid}</h5>
           <hr/>
           <h5 className="title">{data.제목}</h5>
           <img src="" alt="" />
           <p className="date">{data.게시일}</p>
+          <p className="content">{data.content}</p>
           <p className="price">{data.가격}원</p>
           <Link href={`/edit/${id}`}><a><button className='btn btn-danger mt-3'>수정</button></a></Link>
         </div>
