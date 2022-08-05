@@ -54,6 +54,9 @@ export default function Login () {
   }, []);
 
   
+  const handleLogout= ()=>{
+    signOut()
+  }
 
   return (
     <>
@@ -79,7 +82,7 @@ export default function Login () {
         <div className="d-flex w-50 mx-auto justify-content-between">
           <button type="submit" className="d-block btn btn-primary btn-lg" id="register" onClick={ ()=>{onSubmit(event)}}>가입</button>
           <button type="submit" className="d-block btn btn-danger btn-lg" id="login" onClick={ ()=>{onSubmit(event)}}>로그인</button>
-          <button onClick={ ()=>{handleLogin()}  }>로그인했냐</button>
+        
         </div>
         
         {/* <button type="submit" className="btn btn-danger mx-3" id="logout" onClick={ ()=>{onSubmit(event)}}>로그아웃</button> */}
